@@ -1,73 +1,132 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Dynamic Checkbox List in React (TypeScript)
 
-## React Compiler
+This project demonstrates how to build a **dynamic checkbox list** in **React with TypeScript**, using best practices such as controlled components, state management with arrays, and list rendering using `.map()`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Dynamic rendering of checkboxes using `.map()`
+* Multiple selection using array state
+* Controlled checkbox inputs
+* Proper TypeScript typings
+* Clean and reusable logic
+* Interview-ready React patterns
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🧠 Concepts Covered
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+* React Functional Components
+* `useState` with TypeScript
+* Handling checkbox inputs
+* Controlled vs uncontrolled components
+* Array operations (`includes`, `filter`, spread operator)
+* React reconciliation & keys
+
+---
+
+## 📂 Project Structure
+
+```
+src/
+ └── LanguageSelect.tsx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧩 Component Code
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```tsx
+import { useState, type FC } from 'react';
+
+const LanguageSelect: FC = () => {
+  const languages: string[] = ['React', 'JavaScript', 'CSS', 'HTML'];
+  const [selectedLang, setSelectedLang] = useState<string[]>([]);
+
+  const handleCheckboxChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { value, checked } = e.target;
+
+    if (checked) {
+      setSelectedLang((prev) => [...prev, value]);
+    } else {
+      setSelectedLang((prev) =>
+        prev.filter((lang) => lang !== value)
+      );
+    }
+  };
+
+  return (
+    <div>
+      {languages.map((lang) => (
+        <p key={lang}>
+          <label>
+            <input
+              type="checkbox"
+              value={lang}
+              checked={selectedLang.includes(lang)}
+              onChange={handleCheckboxChange}
+            />
+            {lang}
+          </label>
+        </p>
+      ))}
+
+      <h3>Selected Languages:</h3>
+      <p>{selectedLang.join(', ')}</p>
+    </div>
+  );
+};
+
+export default LanguageSelect;
 ```
+
+---
+
+## ✅ How It Works
+
+1. Languages are stored in an array.
+2. Checkboxes are rendered dynamically using `.map()`.
+3. Selected values are stored in a `string[]` state.
+4. `checked={selectedLang.includes(lang)}` keeps UI and state in sync.
+5. `key` ensures correct React reconciliation.
+
+---
+
+## 🧪 Example Output
+
+```
+☑ React
+☐ JavaScript
+☑ CSS
+☐ HTML
+
+Selected Languages:
+React, CSS
+```
+
+---
+
+## 🎯 Best Practices Used
+
+* ✅ Stable keys (not index)
+* ✅ Controlled inputs
+* ✅ Immutable state updates
+* ✅ Strong TypeScript typing
+
+---
+
+## 👨‍💻 Author
+
+**Aman Yadav**
+Front-End Engineer | React | TypeScript | JavaScript
+
+---
+
+
